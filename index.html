@@ -3,121 +3,468 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>โปรไฟล์ส่วนตัวของฉัน</title>
+    <title>Peeranan Chaddilok | Premium Portfolio</title>
     <style>
-        /* ตั้งค่าฟอนต์และพื้นหลัง */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+        /* รีเซ็ตค่าเริ่มต้นและตัวแปรสีสำหรับทำสองโหมด */
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --navbar-bg: rgba(255, 255, 255, 0.95);
+            --primary-color: #0284c7;
+            --primary-hover: #0369a1;
+            --border-color: #e2e8f0;
+            --hero-bg: linear-gradient(135deg, #0f172a, #1e3a8a);
+        }
+
+        /* สำหรับโหมดมืด (Dark Mode) */
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --navbar-bg: rgba(15, 23, 42, 0.95);
+            --primary-color: #38bdf8;
+            --primary-hover: #0ea5e9;
+            --border-color: #334155;
+            --hero-bg: linear-gradient(135deg, #020617, #0f172a);
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #333;
-        }
-
-        /* การ์ดโปรไฟล์ */
-        .profile-card {
-            background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 450px;
-            width: 90%;
-            padding: 30px;
-            text-align: center;
             box-sizing: border-box;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
 
-        /* รูปโปรไฟล์ */
-        .profile-img {
-            width: 150px;
-            height: 150px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        /* เมนูบาร์และปุ่มสลับโหมด */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--navbar-bg);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10%;
+        }
+        .navbar .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* ปุ่มสลับโหมดมืด/สว่าง */
+        .theme-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* ส่วนจัดวางเนื้อหาหลัก */
+        .section {
+            padding: 100px 10% 60px 10%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            color: var(--text-main);
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        #home {
+            background: var(--hero-bg);
+            color: white;
+            padding: 180px 10% 120px 10%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+        @media (max-width: 768px) {
+            #home { flex-direction: column-reverse; text-align: center; padding-top: 140px; }
+        }
+        .hero-text h1 { font-size: 46px; margin-bottom: 10px; }
+        .hero-text h2 { font-size: 24px; color: #38bdf8; font-weight: 400; margin-bottom: 20px; }
+        .hero-text p { color: #cbd5e1; max-width: 550px; margin-bottom: 35px; }
+        
+        .btn-group { display: flex; gap: 15px; }
+        @media (max-width: 768px) { .btn-group { justify-content: center; } }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .btn-primary { background: var(--primary-color); color: white; border: none; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-secondary { border: 2px solid #cbd5e1; color: white; background: transparent; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+        .profile-img-container .profile-img {
+            width: 260px;
+            height: 260px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid #007bff;
-            margin-bottom: 20px;
+            border: 6px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
         }
 
-        /* หัวข้อชื่อ */
-        h1 {
-            font-size: 24px;
-            margin: 10px 0 5px 0;
-            color: #222;
+        /* เกี่ยวกับฉัน & Education */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-color);
         }
+        .card p { color: var(--text-muted); margin-bottom: 15px; }
 
-        /* ตำแหน่งงานหรือสโลแกน */
-        .title {
-            font-size: 16px;
-            color: #007bff;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .timeline { border-left: 2px solid var(--border-color); padding-left: 20px; }
+        .timeline-item { position: relative; margin-bottom: 25px; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -27px; top: 6px;
+            width: 12px; height: 12px; border-radius: 50%;
+            background: var(--primary-color); border: 2px solid var(--bg-card);
         }
+        .timeline-year { font-size: 13px; color: var(--primary-color); font-weight: bold; }
+        .timeline-title { font-weight: 600; font-size: 17px; }
+        .timeline-desc { font-size: 14px; color: var(--text-muted); }
 
-        /* เส้นคั่น */
-        hr {
-            border: 0;
-            height: 1px;
-            background: #eee;
-            margin: 20px 0;
+        /* ส่วนทักษะความสามารถ */
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .skill-card {
+            background: var(--bg-card); border-radius: 16px; padding: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02); border: 1px solid var(--border-color);
+            transition: transform 0.3s;
         }
+        .skill-card:hover { transform: translateY(-5px); }
+        .skill-card h4 { margin-bottom: 20px; font-size: 18px; color: var(--primary-color); }
+        .skill-bar-item { margin-bottom: 15px; }
+        .skill-info { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; margin-bottom: 5px; }
+        .bar-bg { background: var(--border-color); height: 8px; border-radius: 4px; }
+        .bar-fill { background: var(--primary-color); height: 100%; border-radius: 4px; }
 
-        /* ส่วนข้อมูลประวัติ */
-        .bio {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #666;
-            text-align: left;
+        /* ส่วนฟิลเตอร์ผลงาน (Portfolio Filter) */
+        .filter-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .filter-btn {
+            background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color);
+            padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.3s;
         }
+        .filter-btn.active, .filter-btn:hover { background: var(--primary-color); color: white; border-color: var(--primary-color); }
 
-        .bio h3 {
-            color: #333;
-            margin-bottom: 10px;
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .portfolio-item {
+            background: var(--bg-card); border-radius: 16px; overflow: hidden;
+            border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            display: block; transition: transform 0.3s, opacity 0.3s;
         }
+        .portfolio-item.hide { display: none; opacity: 0; }
+        .portfolio-item:hover { transform: translateY(-5px); }
+        .portfolio-body { padding: 25px; }
+        .tag {
+            display: inline-block; background: var(--border-color); color: var(--primary-color);
+            font-size: 11px; padding: 4px 12px; border-radius: 15px; font-weight: 600; margin-bottom: 12px;
+        }
+        .portfolio-body h4 { font-size: 19px; margin-bottom: 8px; }
+        .portfolio-body p { font-size: 14px; color: var(--text-muted); }
 
-        /* ส่วนข้อมูลติดต่อ */
-        .contact-info {
-            margin-top: 20px;
-            text-align: left;
-            font-size: 14px;
+        /* ตารางกิจกรรม / เกียรติบัตร */
+        .table-container { width: 100%; overflow-x: auto; margin-top: 40px; }
+        .cert-table {
+            width: 100%; border-collapse: collapse; background: var(--bg-card);
+            border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color);
         }
+        .cert-table th, .cert-table td { padding: 15px 20px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        .cert-table th { background-color: var(--border-color); color: var(--text-main); font-weight: 600; }
+        .cert-table tr:hover { background-color: rgba(0,0,0,0.01); }
 
-        .contact-item {
-            margin-bottom: 8px;
+        /* ส่วนติดต่อ */
+        .contact-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+            background: var(--bg-card); padding: 40px; border-radius: 20px;
+            border: 1px solid var(--border-color); box-shadow: 0 10px 20px rgba(0,0,0,0.02);
         }
+        @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; padding: 25px; } }
+        .info-link { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; text-decoration: none; color: var(--text-main); }
+        .info-link:hover { color: var(--primary-color); }
+        
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 14px; margin-bottom: 15px;
+            background: var(--bg-primary); color: var(--text-main);
+            border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px;
+        }
+        .contact-form button {
+            background: var(--primary-color); color: white; border: none;
+            padding: 14px; border-radius: 10px; font-weight: 600; cursor: pointer; width: 100%;
+        }
+        .contact-form button:hover { background: var(--primary-hover); }
 
-        .contact-item strong {
-            color: #555;
-        }
+        footer { background: #020617; color: #94a3b8; text-align: center; padding: 30px; font-size: 14px; margin-top: 8px; }
     </style>
 </head>
 <body>
 
-    <div class="profile-card">
-        <img src="./S__26148866.jpg" alt="รูปโปรไฟล์ของฉัน" class="profile-img">
-        
-        <h1>พีรนันท์ เฉิดดิลก</h1>
-        <div class="title"> STUDENT</div>
-        
-        <hr>
-        
-        <div class="bio">
-            <h3>เกี่ยวกับฉัน (About Me)</h3>
-            <p>สวัสดีค่ะ หนูเป็นนักศึกษามหาวิทยาลัยกาฬสินธุ์ คณะวิสวกรรม สาขา คอมพิวเตอร์ ยินดีที่ได้รู้จักทุกคนค่ะ </p>
+    <!-- เมนูบาร์ -->
+    <nav class="navbar">
+        <a href="#home" class="logo">Peeranan.C</a>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#home">หน้าแรก</a></li>
+                <li><a href="#about">ประวัติ</a></li>
+                <li><a href="#skills">ทักษะ</a></li>
+                <li><a href="#portfolio">ผลงาน</a></li>
+                <li><a href="#contact">ติดต่อ</a></li>
+            </ul>
+            <!-- ปุ่มเปลี่ยนโหมด -->
+            <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">DARK MODE</button>
         </div>
-        
-        <hr>
-        
-        <div class="contact-info">
-            <h3>ข้อมูลการติดต่อ (Contact)</h3>
-            <div class="contact-item"><strong>อีเมล:</strong> peeranan3112@gmail.com</div>
-            <div class="contact-item"><strong>เบอร์โทร:</strong> 065-113-1038</div>
-            <div class="contact-item"><strong>ที่อยู่:</strong> กาฬสินธุ์, ประเทศไทย</div>
-        </div>
-    </div>
+    </nav>
 
+    <!-- 1. Hero Section -->
+    <section id="home">
+        <div class="hero-text">
+            <h1>พีรนันท์ เฉิดดิลก</h1>
+            <h2>Computer Engineering Student</h2>
+            <p>นักศึกษาคณะวิศวกรรมศาสตร์ สาขาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยกาฬสินธุ์ มุ่งมั่นพัฒนาทักษะด้าน Software, Network และก้าวสู่การเป็นวิศวกรมืออาชีพ</p>
+            <div class="btn-group">
+                <a href="#contact" class="btn btn-primary">ติดต่อร่วมงาน</a>
+                <a href="#portfolio" class="btn btn-secondary">ดูผลงานและโปรเจกต์</a>
+            </div>
+        </div>
+        <div class="profile-img-container">
+            <img src="./S__26148866.jpg" alt="รูปโปรไฟล์ พีรนันท์" class="profile-img">
+        </div>
+    </section>
+
+    <!-- 2. ส่วนเกี่ยวกับฉัน -->
+    <section id="about" class="section">
+        <h3 class="section-title">ประวัติส่วนตัว</h3>
+        <div class="grid-2">
+            <div class="card">
+                <h4 style="font-size: 18px; margin-bottom: 15px; font-weight: 600;">เกี่ยวกับตนเอง (About Me)</h4>
+                <p>สวัสดีค่ะ หนูชื่อ <strong>พีรนันท์ เฉิดดิลก</strong> ปัจจุบันกำลังศึกษาอยู่ในระดับปริญญาตรี คณะวิศวกรรมศาสตร์ สาขาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยกาฬสินธุ์</p>
+                <p>หนูมีความตั้งใจที่จะนำความรู้ด้านการเขียนโปรแกรมและการจัดการระบบโครงสร้างพื้นฐานไอทีมาประยุกต์ใช้ในการสร้างเทคโนโลยีที่ตอบโจทย์สังคม ตลอดระยะเวลาการศึกษาหนูได้ฝึกฝนทั้งในภาคทฤษฎีและปฏิบัติอย่างต่อเนื่องค่ะ</p>
+            </div>
+            <div class="card">
+                <h4 style="font-size: 18px; margin-bottom: 15px; font-weight: 600;">ประวัติการศึกษา (Education)</h4>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">ปัจจุบัน</div>
+                        <div class="timeline-title">ปริญญาตรี ปล.บ. (วิศวกรรมคอมพิวเตอร์)</div>
+                        <div class="timeline-desc">คณะวิศวกรรมศาสตร์ มหาวิทยาลัยกาฬสินธุ์</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">ช่วงก่อนเข้ามหาวิทยาลัย</div>
+                        <div class="timeline-title">มัธยมศึกษาตอนปลาย (สายวิทย์ - คณิต)</div>
+                        <div class="timeline-desc">ระบุชื่อโรงเรียนเดิมของคุณพีรนันท์</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. ส่วนทักษะความสามารถ -->
+    <section id="skills" class="section">
+        <h3 class="section-title">ทักษะและความสามารถ</h3>
+        <div class="skills-container">
+            <div class="skill-card">
+                <h4>Web Development</h4>
+                <div class="skill-bar-item"><div class="skill-info"><span>HTML5 / CSS3</span><span>70%</span></div><div class="bar-bg"><div class="bar-fill" style="width: 70%;"></div></div></div>
+                <div class="skill-bar-item"><div class="skill-info"><span>JavaScript (Basic)</span><span>45%</span></div><div class="bar-bg"><div class="bar-fill" style="width: 45%;"></div></div></div>
+            </div>
+            <div class="skill-card">
+                <h4>Programming</h4>
+                <div class="skill-bar-item"><div class="skill-info"><span>Python</span><span>60%</span></div><div class="bar-bg"><div class="bar-fill" style="width: 60%;"></div></div></div>
+                <div class="skill-bar-item"><div class="skill-info"><span>C / C++</span><span>50%</span></div><div class="bar-bg"><div class="bar-fill" style="width: 50%;"></div></div></div>
+            </div>
+            <div class="skill-card">
+                <h4>Network & Tools</h4>
+                <div class="skill-bar-item"><div class="skill-info"><span>Computer Networking</span><span>60%</span></div><div class="bar-bg"><div class="bar-fill" style="width: 60%;"></div></div></div>
+                <div class="skill-bar-item"><div class="skill-info"><span>Git / GitHub</span><span>50%</span></div><div class="bar-bg"><div class="bar-fill" style="width: 50%;"></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ส่วนผลงานและเกียรติบัตรพร้อมระบบฟิลเตอร์ -->
+    <section id="portfolio" class="section">
+        <h3 class="section-title">ผลงานและการเข้าร่วมอบรม</h3>
+        
+        <!-- ปุ่มฟิลเตอร์ผลงาน -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterPortfolio('all')">ทั้งหมด</button>
+            <button class="filter-btn" onclick="filterPortfolio('web')">Web App</button>
+            <button class="filter-btn" onclick="filterPortfolio('iot')">IoT / Network</button>
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="portfolio-item web">
+                <div class="portfolio-body">
+                    <span class="tag">Web App</span>
+                    <h4>Responsive Personal Portfolio</h4>
+                    <p>เว็บไซต์แสดงข้อมูลประวัติส่วนตัวและผลงานส่วนบุคคล รองรับหน้าจอคอมพิวเตอร์และมือถือได้อย่างสมบูรณ์</p>
+                </div>
+            </div>
+            <div class="portfolio-item iot">
+                <div class="portfolio-body">
+                    <span class="tag">IoT / Network</span>
+                    <h4>Smart Home Network Simulation</h4>
+                    <p>ออกแบบและจำลองระบบเครือข่ายภายในบ้านและการเชื่อมต่อเซนเซอร์อัจฉริยะในคลาสเรียนวิศวกรรม</p>
+                </div>
+            </div>
+            <div class="portfolio-item web">
+                <div class="portfolio-body">
+                    <span class="tag">Web App</span>
+                    <h4>Basic CRUD Application</h4>
+                    <p>การฝึกเขียนระบบบันทึกฐานข้อมูลเบื้องต้นเพื่อประยุกต์ใช้กับการเก็บข้อมูลสถิติต่างๆ</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ตารางเกียรติบัตรเพิ่มเติม -->
+        <div class="table-container">
+            <h4 style="margin: 30px 0 15px 0; font-size: 18px;">ใบประกาศนียบัตร & การอบรม (Certificates)</h4>
+            <table class="cert-table">
+                <thead>
+                    <tr>
+                        <th>ปี พ.ศ.</th>
+                        <th>ชื่อหลักสูตร / การอบรม</th>
+                        <th>หน่วยงานที่ออกให้</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2568</td>
+                        <td>หลักสูตรการพัฒนาเว็บแอปพลิเคชันเบื้องต้น</td>
+                        <td>Online Learning Platform</td>
+                    </tr>
+                    <tr>
+                        <td>2567</td>
+                        <td>อบรมการต่อยอดระบบเครือข่ายและ Network Security</td>
+                        <td>Faculty Workshop</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 5. ส่วนติดต่อ -->
+    <section id="contact" class="section">
+        <h3 class="section-title">ช่องทางการติดต่อ</h3>
+        <div class="contact-grid">
+            <div class="contact-details">
+                <h4>ติดต่อสอบถามหรือคุยงาน</h4>
+                <a href="mailto:peeranan3112@gmail.com" class="info-link"><strong>อีเมล:</strong> peeranan3112@gmail.com</a>
+                <a href="tel:0651131038" class="info-link"><strong>เบอร์โทร:</strong> 065-113-1038</a>
+                <div class="info-link"><strong>ที่อยู่:</strong> คณะวิศวกรรมศาสตร์ มหาวิทยาลัยกาฬสินธุ์</div>
+                
+                <h4 style="margin-top: 30px;">Social Links</h4>
+                <div style="display: flex; gap: 10px;">
+                    <a href="#" target="_blank" class="btn btn-primary" style="padding: 8px 20px; font-size:13px;">Facebook</a>
+                    <a href="#" target="_blank" class="btn btn-secondary" style="padding: 8px 20px; font-size:13px; color:var(--text-main); border-color:var(--border-color);">GitHub</a>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h4>ส่งข้อความฝากไว้</h4>
+                <form onsubmit="alert('ส่งข้อความเรียบร้อยแล้วค่ะ'); return false;">
+                    <input type="text" placeholder="ชื่อผู้ติดต่อ" required>
+                    <input type="email" placeholder="อีเมลผู้ติดต่อ" required>
+                    <textarea rows="4" placeholder="รายละเอียดข้อความ" required></textarea>
+                    <button type="submit">ส่งข้อความด่วน</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Peeranan Chaddilok. All Rights Reserved. | Faculty of Engineering, Kalasin University</p>
+    </footer>
+
+    <!-- JavaScript เสริมลูกเล่นสำหรับโหมดมืดและปุ่มฟิลเตอร์ผลงาน -->
+    <script>
+        // ระบบเปลี่ยนธีม Dark / Light Mode
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            document.getElementById('themeBtn').innerText = targetTheme === 'dark' ? 'LIGHT MODE' : 'DARK MODE';
+        }
+
+        // ระบบฟิลเตอร์เลือกดูผลงานตามหมวดหมู่
+        function filterPortfolio(category) {
+            // ปรับสีปุ่มที่กำลังถูกคลิกให้ active
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // ซ่อนหรือแสดงการ์ดผลงานตามหมวดหมู่ที่เลือก
+            const items = document.querySelectorAll('.portfolio-item');
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.classList.remove('hide');
+                } else {
+                    item.classList.add('hide');
+                }
+            });
+        }
+    </script>
 </body>
 </html>
